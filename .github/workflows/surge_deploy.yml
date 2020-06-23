@@ -21,21 +21,22 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-      
-    - name: install nodejs
+
+    # Runs a single command using the runners shell
+    - name: Setup Node Js Environment
       uses: actions/setup-node@v2-beta
       with:
-        node-version: 12
-      
-    - uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: install # will run `yarn install` command
+        version: 12 
+        
+       
     
-    - name: build react app
-      run: yarn build
+    - name: GitHub Action for yarn
+      uses: Borales/actions-yarn@v2.1.0
+      with:
+        cmd: install
      
-    - name: install surge
+    - name: installing Surge
       run: npm install -g surge
      
-    - name: deploy to surge
-      run: surge ./build parentToChildComponent.surge.sh --token ${{Secrets.SURGE_TOKEN}}
+    - name: Deploying on Surge
+      run: surge ./build http://bootcampclass_3.surge.sh/ --token ${{secrets.SURGE_TOKEN}}
